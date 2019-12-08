@@ -2,7 +2,9 @@ package main
 
 import (
 	"fmt"
+	"image/png"
 	"io/ioutil"
+	"os"
 
 	"github.com/liennie/sif/image"
 )
@@ -43,4 +45,18 @@ func main() {
 	}
 
 	fmt.Println(product)
+
+	file, err := os.Create(fmt.Sprintf("image.png"))
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+
+	err = png.Encode(file, img.Flatten())
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+
+	file.Close()
 }
